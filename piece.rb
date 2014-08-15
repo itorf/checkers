@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 require_relative 'board'
 require_relative 'game'
 require_relative 'player'
 
 class Piece
-  attr_accessor :pos, :color, :board
+  attr_accessor :pos, :color, :board, :king
 
   def initialize(pos, color, board)
     @color = color
@@ -136,7 +137,7 @@ class Piece
       [self.dir, 1],
       [self.dir, -1]
     ]
-    if @king
+    if @king == true
       directions << [self.dir * -1, 1] 
       directions << [self.dir * -1, -1] 
     end
@@ -158,9 +159,12 @@ class Piece
   end
   
   def promote
-    @king == true
+    @king = true
   end
 end
 
 class InvalidMoveError < StandardError
 end
+
+#king's not going backwards
+#errors not working

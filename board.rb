@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 require_relative 'piece'
 require_relative 'game'
 require_relative 'player'
+require 'colorize'
 
 class Board
   attr_accessor :grid
@@ -34,16 +36,28 @@ class Board
   end
   
   def render_grid
+    system 'clear'
+    print " a  b  c  d  e  f  g  h \n"
     @grid.each_with_index do |row, idx1|
       row.each_with_index do |space, idx2|
         if space.nil?
-          print "_"
+          print "   ".colorize(:background => :red) if (idx1 + idx2).even?
+          print "   ".colorize(:background => :grey) if (idx1 + idx2).odd?
         else
-          print "#{@grid[idx1][idx2].color}"
+          unless  @grid[idx1][idx2].king == true
+            print " \u{25CF} " if @grid[idx1][idx2].color == :b
+          else
+            print " \u{26AB} " if @grid[idx1][idx2].color == :b
+          end
+          
+          unless  @grid[idx1][idx2].king == true
+            print " \u{26AC} " if @grid[idx1][idx2].color == :r
+          else
+            print " \u{26AA} " if @grid[idx1][idx2].color == :r
+          end
         end
-        print "|"
       end
-      print "\n"
+      print " #{idx1+1}\n"
     end
   end   
   
