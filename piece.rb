@@ -77,6 +77,7 @@ class Piece
     if valid_move_seq?(move_sequence)
       perform_moves!(move_sequence)
     end
+    self.promote if maybe_promote?
   end
   
   def perform_moves!(move_sequence)
@@ -147,8 +148,17 @@ class Piece
     @color == :r ? -1 : 1
   end
   
-  def maybe_promote
-    #see if piece reached back row
+  def maybe_promote?
+    if @color == :r
+      return true if @pos[0] == 0
+    else
+      return true if @pos[0] == 7
+    end
+    false
+  end
+  
+  def promote
+    @king == true
   end
 end
 

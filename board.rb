@@ -10,10 +10,6 @@ class Board
     populate_grid if fill_board
   end
   
-  def place_piece(pos, color)
-    @grid[pos[0]][pos[1]] = Piece.new([pos[0], pos[1]], color, self)
-  end
-  
   def [](pos)
     x, y = pos
     @grid[x][y]
@@ -49,17 +45,7 @@ class Board
       end
       print "\n"
     end
-  end
-  
-  def move(start_pos, end_pos)
-    raise "Invalid position" unless valid_pos?(end_pos)
-    move!(start_pos, end_pos)
-  end
-  
-  def move!(start_pos, end_pos)
-    self[start_pos].move(end_pos)
-  end
-    
+  end   
   
   def valid_pos?(pos)
     (pos[0].between?(0,7) && pos[1].between?(0,7)) && @grid[pos[0]][pos[1]].nil?
